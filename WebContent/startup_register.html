@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Startup Details | Personalized Startup Internship Recommendation System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="site-header"><div class="header-inner">
+        <h1>Personalized Startup Internship Recommendation System</h1>
+        <p>Manage your startup profile.</p>
+    </div></header>
+    <nav class="site-nav" aria-label="Company navigation">
+        <a href="companyDashboard">Company Dashboard</a>
+        <a href="index.html">Home</a>
+        <a href="logout">Sign Out</a>
+    </nav>
+    <main class="page-content">
+        <h2>Startup Details</h2>
+        <div class="status-message status-error" id="startup-details-error" role="alert" hidden></div>
+        <p class="page-intro">Update the public company name and contact email associated with your account.</p>
+        <form class="form-card" action="startupRegister" method="post">
+            <fieldset>
+                <legend>Company Details</legend>
+                <div class="form-grid">
+                    <div class="field field-full">
+                        <label for="company-name">Company name</label>
+                        <input id="company-name" type="text" name="company_name" required maxlength="150" autocomplete="organization">
+                    </div>
+                    <div class="field field-full">
+                        <label for="company-email">Email address</label>
+                        <input id="company-email" type="email" name="email" required autocomplete="email">
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-actions">
+                <input type="submit" value="Save Company Details">
+                <a href="companyDashboard">Cancel</a>
+            </div>
+        </form>
+    </main>
+    <script>
+        if (new URLSearchParams(window.location.search).get("error") === "validation") {
+            var errorMessage = document.getElementById("startup-details-error");
+            errorMessage.textContent = "Please enter a valid company name and email address.";
+            errorMessage.hidden = false;
+        }
+    </script>
+</body>
+</html>

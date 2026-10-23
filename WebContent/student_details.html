@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Profile | Personalized Startup Internship Recommendation System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        function checkStudentDetails() {
+            let skills = document.forms["studentForm"].elements["skills"];
+            let hasSkill = false;
+            for (let i = 0; i < skills.options.length; i++) {
+                if (skills.options[i].selected) {
+                    hasSkill = true;
+                    break;
+                }
+            }
+            if (!hasSkill) {
+                alert("Select at least one skill.");
+                return false;
+            }
+
+            if (!document.querySelector('input[name="location"]:checked')) {
+                alert("Select at least one preferred location.");
+                return false;
+            }
+            if (!document.querySelector('input[name="domain"]:checked')) {
+                alert("Select at least one preferred startup domain.");
+                return false;
+            }
+            let experience = document.forms["studentForm"]["experience"].value;
+            if (experience === "" || Number(experience) < 0 || Number(experience) > 20) {
+                alert("Enter experience between 0 and 20 years.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <header class="site-header"><div class="header-inner">
+        <h1>Personalized Startup Internship Recommendation System</h1>
+        <p>Set your preferences to help discover internships that suit you.</p>
+    </div></header>
+    <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="feedback.html">Feedback</a>
+        <a href="logout">Sign Out</a>
+    </nav>
+    <main class="page-content">
+        <h2>Student Profile</h2>
+        <div class="status-message status-error" id="profile-message" role="alert" hidden></div>
+        <p class="page-intro">Choose your skills and preferences so recommendations can better reflect your goals.</p>
+        <form class="form-card form-card-wide" name="studentForm" action="studentDetails" method="post" onsubmit="return checkStudentDetails()">
+            <fieldset>
+                <legend>Skills and experience</legend>
+                <div class="form-grid">
+                    <div class="field field-full">
+                        <label for="skills">Your skills</label>
+                        <select id="skills" name="skills" size="5" multiple required>
+                            <option>AI</option><option>Android Development</option><option>AWS</option><option>Bootstrap</option>
+                            <option>C</option><option>C++</option><option>Computer Networks</option><option>CSS</option>
+                            <option>Cyber Security</option><option>Data Science</option><option>DBMS</option><option>Deep Learning</option>
+                            <option>Docker</option><option>Excel</option><option>Flutter</option><option>Git</option><option>HTML</option>
+                            <option>Java</option><option>JavaScript</option><option>Machine Learning</option><option>MySQL</option>
+                            <option>Node.js</option><option>Operating Systems</option><option>Power BI</option><option>Python</option><option>Tailwind CSS</option>
+                        </select>
+                        <span class="field-hint">Select one or more skills. Use Ctrl (Windows) or Command (Mac) to select multiple.</span>
+                    </div>
+                    <div class="field">
+                        <label for="experience">Experience (years)</label>
+                        <input id="experience" type="number" name="experience" min="0" max="20" step="1" required>
+                    </div>
+                    <div class="field">
+                        <span class="field-label" id="duration-label">Preferred duration</span>
+                        <div class="choice-list" role="group" aria-labelledby="duration-label">
+                            <label><input type="radio" name="duration" value="2 months" required> 2 months</label>
+                            <label><input type="radio" name="duration" value="3 months"> 3 months</label>
+                            <label><input type="radio" name="duration" value="6 months"> 6 months</label>
+                        </div>
+                    </div>
+                    <div class="field field-full">
+                        <label for="stipend">Expected stipend (per month)</label>
+                        <input id="stipend" type="range" name="stipend" min="10000" max="100000" step="1000" value="30000" oninput="amount.value=this.value">
+                        <span class="field-hint">Selected amount: ₹<output id="amount">30000</output></span>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Preferences</legend>
+                <div class="form-grid">
+                    <div class="field field-full">
+                        <span class="field-label" id="location-label">Preferred locations</span>
+                        <div class="choice-list" role="group" aria-labelledby="location-label">
+                            <label><input type="checkbox" value="Hyderabad" name="location"> Hyderabad</label>
+                            <label><input type="checkbox" value="Bangalore" name="location"> Bangalore</label>
+                            <label><input type="checkbox" value="Chennai" name="location"> Chennai</label>
+                            <label><input type="checkbox" value="Pune" name="location"> Pune</label>
+                            <label><input type="checkbox" value="Mumbai" name="location"> Mumbai</label>
+                            <label><input type="checkbox" value="Delhi" name="location"> Delhi</label>
+                        </div>
+                    </div>
+                    <div class="field field-full">
+                        <span class="field-label" id="domain-label">Preferred startup domains</span>
+                        <div class="choice-list" role="group" aria-labelledby="domain-label">
+                            <label><input type="checkbox" name="domain" value="FinTech"> FinTech</label>
+                            <label><input type="checkbox" name="domain" value="Healthcare"> Healthcare</label>
+                            <label><input type="checkbox" name="domain" value="AI"> AI</label>
+                            <label><input type="checkbox" name="domain" value="AgriTech"> AgriTech</label>
+                            <label><input type="checkbox" name="domain" value="E-commerce"> E-commerce</label>
+                            <label><input type="checkbox" name="domain" value="Blockchain"> Blockchain</label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-actions"><input type="submit" value="Continue to Recommendations"></div>
+        </form>
+    </main>
+    <script>
+        var profileStatus = new URLSearchParams(window.location.search).get("profile");
+        if (profileStatus === "incomplete") {
+            var profileMessage = document.getElementById("profile-message");
+            profileMessage.textContent = "Complete your skills, experience, duration, location, and domain preferences before viewing recommendations.";
+            profileMessage.hidden = false;
+        }
+        if (profileStatus === "invalid") {
+            var profileMessage = document.getElementById("profile-message");
+            profileMessage.textContent = "Please complete all required profile preferences before continuing.";
+            profileMessage.hidden = false;
+        }
+    </script>
+</body>
+</html>

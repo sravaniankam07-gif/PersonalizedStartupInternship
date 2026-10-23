@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Post Internship | Personalized Startup Internship Recommendation System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="site-header"><div class="header-inner">
+        <h1>Personalized Startup Internship Recommendation System</h1>
+        <p>Share an opportunity with students looking for their next step.</p>
+    </div></header>
+    <nav class="site-nav" aria-label="Main navigation">
+        <a href="companyDashboard">Company Dashboard</a>
+        <a href="index.html">Home</a>
+        <a href="logout">Sign Out</a>
+    </nav>
+    <main class="page-content">
+        <h2>Post an Internship</h2>
+        <div class="status-message status-error" id="internship-error" role="alert" hidden></div>
+        <p class="page-intro">Add the role details students need to understand your opportunity.</p>
+        <form class="form-card form-card-wide" action="postInternship" method="post">
+            <fieldset>
+                <legend>Internship Details</legend>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="title">Internship title</label>
+                        <input id="title" type="text" name="title" required maxlength="150">
+                    </div>
+                    <div class="field">
+                        <label for="domain">Domain</label>
+                        <select id="domain" name="domain" required>
+                            <option value="">Select a domain</option>
+                            <option>FinTech</option><option>Healthcare</option><option>AI</option>
+                            <option>AgriTech</option><option>E-commerce</option><option>Blockchain</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="location">Location</label>
+                        <input id="location" type="text" name="location" required maxlength="100">
+                    </div>
+                    <div class="field">
+                        <label for="duration">Duration</label>
+                        <input id="duration" type="text" name="duration" required maxlength="50" placeholder="e.g. 3 months">
+                    </div>
+                    <div class="field">
+                        <label for="stipend">Stipend (per month)</label>
+                        <input id="stipend" type="number" name="stipend" min="0" step="1" required>
+                    </div>
+                    <div class="field field-full">
+                        <label for="skills">Required skills</label>
+                        <input id="skills" type="text" name="skills" required placeholder="e.g. Java, SQL, communication">
+                        <span class="field-hint">Separate skills with commas.</span>
+                    </div>
+                    <div class="field field-full">
+                        <label for="eligibility">Eligibility</label>
+                        <textarea id="eligibility" name="eligibility" required></textarea>
+                    </div>
+                    <div class="field field-full">
+                        <label for="application-link">Application link <span>(optional)</span></label>
+                        <input id="application-link" type="url" name="application_link" placeholder="https://">
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-actions">
+                <input type="submit" value="Post Internship">
+                <a href="companyDashboard">Cancel</a>
+            </div>
+        </form>
+    </main>
+    <script>
+        if (new URLSearchParams(window.location.search).get("error") === "validation") {
+            var errorMessage = document.getElementById("internship-error");
+            errorMessage.textContent = "Complete all required internship details before posting.";
+            errorMessage.hidden = false;
+        } else if (new URLSearchParams(window.location.search).get("error") === "failed") {
+            var errorMessage = document.getElementById("internship-error");
+            errorMessage.textContent = "The internship was not posted. Please try again.";
+            errorMessage.hidden = false;
+        }
+    </script>
+</body>
+</html>
