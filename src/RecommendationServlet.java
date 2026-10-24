@@ -68,7 +68,6 @@ public class RecommendationServlet extends HttpServlet {
             out.println("</div></header>");
             out.println("<nav class='site-nav' aria-label='Main navigation'>");
             out.println("<a href='index.html'>Home</a>");
-            out.println("<a href='feedback.html'>Feedback</a>");
             out.println("</nav><main class='page-content'>");
             out.println("<h2>Recommended Internships</h2>");
             out.println("<table class='result-table' border='1' cellpadding='8' align='center'>");
